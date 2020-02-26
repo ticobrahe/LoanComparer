@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/css/style.css" type="text/css" />
+
 
 </head>
 <body>
@@ -29,16 +31,40 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+<div class="container body-content">
+    @RenderBody()
+    <hr />
+        
+</div>
+
+    <div class="wthree_copy_right">
+        <div class="container">
+            <p>© 2018 Bank lock. All rights reserved | Design by </p>
+        </div>
     </div>
 
+<script>
+    $(function () {
+        $("#slider").responsiveSlides({
+            auto: true,
+            pager:false,
+            nav: true,
+            speed: 1000,
+            namespace: "callbacks",
+            before: function () {
+                $('.events').append("<li>before event fired.</li>");
+            },
+            after: function () {
+                $('.events').append("<li>after event fired.</li>");
+            }
+        });
+    });
+</script>
+<script src="~/Content/js/responsiveslides.min.js"></script>
+<script src="~/Content/js/move-top.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
