@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoanComparer.Data
+namespace LoanComparer.Data.Repositories.Interfaces
 {
-    public class Class1
+    public interface ILoanRepository
     {
     }
 }
