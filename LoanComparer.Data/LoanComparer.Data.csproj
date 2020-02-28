@@ -50,12 +50,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\LoanModel.cs" />
+    <Compile Include="Entities\AspNetRole.cs" />
+    <Compile Include="Entities\AspNetUser.cs" />
+    <Compile Include="Entities\AspNetUserClaim.cs" />
+    <Compile Include="Entities\AspNetUserLogin.cs" />
+    <Compile Include="Entities\LoanDbContext.cs" />
+    <Compile Include="Entities\Loaner.cs" />
+    <Compile Include="Entities\LoanerWebsite.cs" />
+    <Compile Include="Entities\Subscribe.cs" />
+    <Compile Include="Entities\Visit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Interfaces\ILoanRepository.cs" />
+    <Compile Include="Repositories\LoanRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

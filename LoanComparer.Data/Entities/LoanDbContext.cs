@@ -5,9 +5,9 @@ namespace LoanComparer.Data.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class LoanModel : DbContext
+    public partial class LoanDbContext : DbContext
     {
-        public LoanModel()
+        public LoanDbContext()
             : base("name=LoanModel")
         {
         }
