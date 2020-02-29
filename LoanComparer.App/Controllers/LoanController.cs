@@ -43,5 +43,12 @@ namespace LoanComparer.App.Controllers
             }
             return View();
         }
+
+        [Authorize]
+        public async Task<ActionResult> Details(int id)
+        {
+            var loaner = await _loanRepository.GetLoanDetail(id);
+            return View();
+        }
     }
 }

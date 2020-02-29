@@ -10,5 +10,6 @@ namespace LoanComparer.Data.Repositories.Interfaces
     public interface ILoanRepository
     {
         Task<IEnumerable<LoanerViewModel>> FindLoaner(HomeViewModel model);
+        Task<LoanerDetailViewModel> GetLoanDetail(int id);
     }
 }
