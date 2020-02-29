@@ -1,87 +1,110 @@
-﻿@{
+﻿
+@model LoanComparer.Data.Models.ViewModels.HomeViewModel
+@{
     ViewBag.Title = "Home Page";
+    
+     ViewBag.Title = "Index";
+     List<SelectListItem> option = new List<SelectListItem>();
+    var option4 = new SelectListItem() { Text = "Select Loan Type", Value = "" };
+    option.Add(option4);
+     var option1 = new SelectListItem() { Text = "Business", Value = "Business" };
+     option.Add(option1);
+     var option2 = new SelectListItem() { Text = "Personal", Value = "Personal" };
+     option.Add(option2);
+     var option3 = new SelectListItem() { Text = "Individual", Value = "Individual" };
+     option.Add(option3);
 }
 
-    <div class="slider" id="home">
-        <div class="callbacks_container">
-            <ul class="rslides" id="slider">
-                <li>
-                    <div class="w3layouts-banner-top w3layouts-banner-top1">
-                        <div class="banner-dott">
-                            <div class="container">
-                                <div class="slider-info">
-                                    <div class="col-md-8  slider-info-txt">
-                                        <h2>Easy Online accounts to customers</h2>
-                                        <div class="w3ls-button">
-                                            <a href="#" data-toggle="modal" data-target="#myModal">More About Our Bank</a>
-                                        </div>
+<div class="slider" id="home">
+    <div class="callbacks_container">
+        <ul class="rslides" id="slider">
+            <li>
+                <div class="w3layouts-banner-top w3layouts-banner-top1">
+                    <div class="banner-dott">
+                        <div class="container">
+                            <div class="slider-info">
+                                <div class="col-md-8  slider-info-txt">
+                                    <h2>Easy access to loan provider</h2>
+                                </div>
+                                <div class="col-md-4">
 
-                                    </div>
-                                    <div class="col-md-4">
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                <li>
-                    <div class="w3layouts-banner-top">
-                        <div class="banner-dott">
-                            <div class="container">
-                                <div class="slider-info">
-                                    <div class="col-md-8 slider-info-txt">
-                                        <h3>credit card processing services</h3>
+                </div>
+            </li>
+            <li>
+                <div class="w3layouts-banner-top">
+                    <div class="banner-dott">
+                        <div class="container">
+                            <div class="slider-info">
+                                <div class="col-md-8 slider-info-txt">
+                                    <h3>credit card processing services</h3>
 
-                                        <div class="w3ls-button">
-                                            <a href="#" data-toggle="modal" data-target="#myModal">More About Our Bank</a>
-                                        </div>
-
+                                    <div class="w3ls-button">
+                                        <a href="#" data-toggle="modal" data-target="#myModal">More About Our Bank</a>
                                     </div>
-                                    <div class="col-md-4">
 
-                                    </div>
+                                </div>
+                                <div class="col-md-4">
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                <li>
-                    <div class="w3layouts-banner-top w3layouts-banner-top3">
-                        <div class="banner-dott">
-                            <div class="container">
-                                <div class="slider-info">
-                                    <div class="col-md-8 slider-info-txt">
-                                        <h3>Services for all your customer needs</h3>
+                </div>
+            </li>
+            <li>
+                <div class="w3layouts-banner-top w3layouts-banner-top3">
+                    <div class="banner-dott">
+                        <div class="container">
+                            <div class="slider-info">
+                                <div class="col-md-8 slider-info-txt">
+                                    <h3>Services for all your customer needs</h3>
 
-                                        <div class="w3ls-button">
-                                            <a href="#" data-toggle="modal" data-target="#myModal">More About Our Bank</a>
-                                        </div>
-
+                                    <div class="w3ls-button">
+                                        <a href="#" data-toggle="modal" data-target="#myModal">More About Our Bank</a>
                                     </div>
-                                    <div class="col-md-4">
 
-                                    </div>
+                                </div>
+                                <div class="col-md-4">
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-            </ul>
-        </div>
-        <div class="clearfix"></div>
-        <div class="main add">
-            <h2>Register For Free Account</h2>
-
-            <form>
-                <h5>Username</h5>
-                <input type="text" Placeholder="Type here" required="">
-                <h5>Email</h5>
-                <input type="email" Placeholder="johnkeith@mail.com" required="">
-                <h5>Password</h5>
-                <input type="password" Placeholder="Password" required="">
-                
-                <input type="submit" Placeholder="Create Account">
-            </form>
-        </div>
+                </div>
+            </li>
+        </ul>
     </div>
+    <div class="clearfix"></div>
+    <div class="main add">
+        <h2>Easy Loan</h2>
+        @using (Html.BeginForm("Loaner", "Loan", FormMethod.Post, new { @class = "form-br" }))
+        {
+
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div>@Html.LabelFor(model => model.Amount)</div>
+
+            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control mb-20", type = "number" } })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            <div>@Html.LabelFor(model => model.Duration)</div>
+            @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control mb-20" } })
+            @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+            <div>@Html.LabelFor(model => model.LoanType)</div>
+            @Html.DropDownList("LoanType", option, new { @class = "form-control mb-20" })
+            @Html.ValidationMessageFor(model => model.LoanType, "", new { @class = "text-danger" })
+            <input type="submit" value="Find Provider" />
+
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
