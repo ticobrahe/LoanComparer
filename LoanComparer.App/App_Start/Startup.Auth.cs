@@ -46,23 +46,23 @@ namespace LoanComparer.App
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseMicrosoftAccountAuthentication(
+                clientId: "e32c706e-0cff-44aa-9ba1-04f80148d264",
+                clientSecret: "Hsl63kEtaMUm1xw2wPUt-CY.jUGZJ.P]");
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "2922013644517206",
+               appSecret: "afda35c60eb67ff9207ae2df07ebdf07");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "590916550313-fh24fhgkkt7r2nvbtp9346qqlddro3v2.apps.googleusercontent.com",
+                ClientSecret = "WbpspRUhf2LYP838zVuM0jQ7"
+            });
         }
     }
 }
