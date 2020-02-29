@@ -28,5 +28,23 @@ namespace LoanComparer.Data.Repositories
                     { CompanyName = loan.CompanyName, Id = loan.LoanerId, LoanType = loan.LoanType };
             return await query.ToListAsync();
         }
+
+        public async Task<LoanerDetailViewModel> GetLoanDetail(int id)
+        {
+            var query = from loan in _context.Loaners
+                join siteName in _context.LoanerWebsites
+                    on loan.SiteId equals siteName.SiteId
+                where loan.LoanerId == id
+                select new LoanerDetailViewModel
+                {
+                    CompanyName = loan.CompanyName,
+                    LoanType = loan.LoanType,
+                    Rate = loan.Rate,
+                    Id = loan.LoanerId,
+                    SiteName = siteName.siteName,
+                    Terms = loan.Terms
+                };
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }

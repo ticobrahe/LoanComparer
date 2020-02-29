@@ -45,10 +45,15 @@ namespace LoanComparer.App.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            var loaner = await _loanRepository.GetLoanDetail(id);
-            return View();
+            decimal amount = Convert.ToDecimal(Session["amount"]);
+            int duration = Convert.ToInt16(Session["duration"]);
+            var loanerDetail = await _loanRepository.GetLoanDetail(id);
+            decimal principalAmount = Convert.ToDecimal(Session["amount"]);
+            ViewBag.principalAmount = Math.Round(principalAmount, 2);
+            return View(loanerDetail);
         }
     }
 }
