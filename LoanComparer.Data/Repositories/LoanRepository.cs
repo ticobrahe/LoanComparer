@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LoanComparer.Data.Entities;
+using LoanComparer.Data.Models;
 using LoanComparer.Data.Models.ViewModels;
 using LoanComparer.Data.Repositories.Interfaces;
 
@@ -27,6 +28,60 @@ namespace LoanComparer.Data.Repositories
                 select new LoanerViewModel
                     { CompanyName = loan.CompanyName, Id = loan.LoanerId, LoanType = loan.LoanType };
             return await query.ToListAsync();
+        }
+
+        public async Task<LoanerDetailViewModel> GetLoanDetail(int id)
+        {
+            var query = from loan in _context.Loaners
+                join siteName in _context.LoanerWebsites
+                    on loan.SiteId equals siteName.SiteId
+                where loan.LoanerId == id
+                select new LoanerDetailViewModel
+                {
+                    CompanyName = loan.CompanyName,
+                    LoanType = loan.LoanType,
+                    Rate = loan.Rate,
+                    Id = loan.LoanerId,
+                    SiteName = siteName.siteName,
+                    Terms = loan.Terms
+                };
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public decimal TotalAmountToPay(decimal rate, decimal amount, int duration)
+        {
+            decimal amountLeft = amount;
+            decimal totalAmount = 0;
+            for (int month = duration; month > 0; month--)
+            {
+                decimal currentTotalAmount = (amountLeft * rate / 100) + amountLeft;
+                decimal amountToPay = currentTotalAmount / month;
+                amountLeft = currentTotalAmount - amountToPay;
+                totalAmount += amountToPay;
+            }
+
+            return totalAmount;
+        }
+
+        public IEnumerable<RepaymentDetails> LoanRepayment(decimal totalAmount, int duration)
+        {
+            var repayments = new List<RepaymentDetails>();
+            decimal monthlyPayment = totalAmount / duration;
+            for (int i = 1; i <= duration; i++)
+            {
+                var amountLeft = totalAmount - monthlyPayment * i;
+                var paymentPercentage = (monthlyPayment * i) / totalAmount;
+                var repaymentdetail = new RepaymentDetails
+                {
+                    AmountLeft = Math.Round(amountLeft, 2),
+                    Duration = i,
+                    MonthlyPayment = monthlyPayment,
+                    PaymentPercentage = Math.Round(paymentPercentage, 2)
+                };
+                repayments.Add(repaymentdetail);
+            }
+
+            return repayments;
         }
     }
 }
