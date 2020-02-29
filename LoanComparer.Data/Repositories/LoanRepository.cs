@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LoanComparer.Data.Entities;
+using LoanComparer.Data.Models;
 using LoanComparer.Data.Models.ViewModels;
 using LoanComparer.Data.Repositories.Interfaces;
 
@@ -45,6 +46,42 @@ namespace LoanComparer.Data.Repositories
                     Terms = loan.Terms
                 };
             return await query.FirstOrDefaultAsync();
+        }
+
+        public decimal TotalAmountToPay(decimal rate, decimal amount, int duration)
+        {
+            decimal amountLeft = amount;
+            decimal totalAmount = 0;
+            for (int month = duration; month > 0; month--)
+            {
+                decimal currentTotalAmount = (amountLeft * rate / 100) + amountLeft;
+                decimal amountToPay = currentTotalAmount / month;
+                amountLeft = currentTotalAmount - amountToPay;
+                totalAmount += amountToPay;
+            }
+
+            return totalAmount;
+        }
+
+        public IEnumerable<RepaymentDetails> LoanRepayment(decimal totalAmount, int duration)
+        {
+            var repayments = new List<RepaymentDetails>();
+            decimal monthlyPayment = totalAmount / duration;
+            for (int i = 1; i <= duration; i++)
+            {
+                var amountLeft = totalAmount - monthlyPayment * i;
+                var paymentPercentage = (monthlyPayment * i) / totalAmount;
+                var repaymentdetail = new RepaymentDetails
+                {
+                    AmountLeft = Math.Round(amountLeft, 2),
+                    Duration = i,
+                    MonthlyPayment = monthlyPayment,
+                    PaymentPercentage = Math.Round(paymentPercentage, 2)
+                };
+                repayments.Add(repaymentdetail);
+            }
+
+            return repayments;
         }
     }
 }

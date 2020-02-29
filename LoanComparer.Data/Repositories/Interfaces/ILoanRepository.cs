@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LoanComparer.Data.Models;
 using LoanComparer.Data.Models.ViewModels;
 
 namespace LoanComparer.Data.Repositories.Interfaces
@@ -11,5 +12,7 @@ namespace LoanComparer.Data.Repositories.Interfaces
     {
         Task<IEnumerable<LoanerViewModel>> FindLoaner(HomeViewModel model);
         Task<LoanerDetailViewModel> GetLoanDetail(int id);
+        decimal TotalAmountToPay(decimal rate, decimal amount, int duration);
+        IEnumerable<RepaymentDetails> LoanRepayment(decimal totalAmount,int duration);
     }
 }

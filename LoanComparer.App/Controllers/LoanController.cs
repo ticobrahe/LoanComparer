@@ -51,8 +51,11 @@ namespace LoanComparer.App.Controllers
             decimal amount = Convert.ToDecimal(Session["amount"]);
             int duration = Convert.ToInt16(Session["duration"]);
             var loanerDetail = await _loanRepository.GetLoanDetail(id);
-            decimal principalAmount = Convert.ToDecimal(Session["amount"]);
-            ViewBag.principalAmount = Math.Round(principalAmount, 2);
+            ViewBag.principalAmount = Convert.ToDecimal(Session["amount"]);
+            var totalAmount = _loanRepository.TotalAmountToPay(loanerDetail.Rate, amount, duration);
+            var repayment = _loanRepository.LoanRepayment(totalAmount, duration);
+            ViewBag.totalAmount = totalAmount;
+            ViewBag.repayment = repayment;
             return View(loanerDetail);
         }
     }

@@ -16,6 +16,17 @@ body a{
 .mt-72 {
 	margin-top: 72px;
 }
+.green {
+	color: #0aab8a !important;
+}
+.details h2 {
+	color: #0aab8a;
+	margin-bottom: 20px;
+}
+
+.details dd {
+	margin-bottom: 20px;
+}
 .footer {
 	position: fixed;
 	left: 0;
