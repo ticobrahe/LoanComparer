@@ -1,0 +1,48 @@
+﻿@model IEnumerable<LoanComparer.Data.Models.ViewModels.LoanerViewModel>
+@{
+    ViewBag.Title = "Loaner";
+    int itemCount = Convert.ToInt16(ViewBag.Count);
+    int count = 1;
+}
+
+    <div class="container mt-72">
+       
+        @if (itemCount == 0)
+        {
+            <div class="text-center alert alert-info">
+                <h4> We could not find a loan provider for your search </h4>
+            </div>
+            <div>
+                @Html.ActionLink("Back", "Index","Home")
+            </div>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">LoanType</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(count++)</td>
+                            <td>@item.CompanyName</td>
+                            <td>@item.LoanType</td>
+                            <td>@Html.ActionLink("Details", "Details", new { id = item.Id })</td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        }
+    </div>
+
+

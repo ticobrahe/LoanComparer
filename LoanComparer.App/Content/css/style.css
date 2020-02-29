@@ -13,6 +13,9 @@ body a{
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
 }
+.mt-72 {
+	margin-top: 72px;
+}
 .footer {
 	position: fixed;
 	left: 0;
@@ -64,7 +67,7 @@ width:100%;
 .agileits-login {
 	padding:3em;
 }
-.agileits-login input[type="text"], .agileits-login input[type="password"], .agileits-login input[type="number"], .agileits-login, select {
+.agileits-login input[type="text"], .agileits-login input[type="password"], .agileits-login input[type="number"], .agileits-login {
 	outline: none;
 	font-size: 1em;
 	color: #fff;
@@ -648,11 +651,11 @@ button.close {
 	border: none;
 	border-bottom: 2px solid #e6e6e6;
 	outline: none;
-	color: #D8D5D5;
+	color: #000000;
 	margin-bottom: 20px;
 
 }
-.main h5 {
+.main label {
 	color: #0aab8a;
 	margin-bottom: 8px;
 	font-size:15px;
@@ -679,7 +682,7 @@ button.close {
 	width: 100%;
 	cursor: pointer;
 	margin-bottom: 0px;
-
+	margin-top: 20px;
 }
 .main form input[type="submit"]:hover{
 	   background:#0aab8a;
