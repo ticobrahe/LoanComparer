@@ -14,5 +14,7 @@ namespace LoanComparer.Data.Repositories.Interfaces
         Task<LoanerDetailViewModel> GetLoanDetail(int id);
         decimal TotalAmountToPay(decimal rate, decimal amount, int duration);
         IEnumerable<RepaymentDetails> LoanRepayment(decimal totalAmount,int duration);
+        Task<bool> Save();
+        Task<bool> IsSubscribe(string userId);
     }
 }

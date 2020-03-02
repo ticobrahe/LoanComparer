@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using LoanComparer.Data.Models.ViewModels;
 using LoanComparer.Data.Repositories.Interfaces;
+using Microsoft.AspNet.Identity;
 
 namespace LoanComparer.App.Controllers
 {
@@ -57,6 +58,21 @@ namespace LoanComparer.App.Controllers
             ViewBag.totalAmount = totalAmount;
             ViewBag.repayment = repayment;
             return View(loanerDetail);
+        }
+
+        [Authorize]
+        public async Task<ActionResult> AccessLoan(int id)
+        {
+            var loaner = _loanRepository.GetLoanDetail(id);
+            var userId = User.Identity.GetUserId();
+            var isSubscribe = await _loanRepository.IsSubscribe(userId);
+            if (!isSubscribe)
+            {
+                TempData["active"] = false;
+                Session["providerId"] = id;
+            }
+
+            return View();
         }
     }
 }

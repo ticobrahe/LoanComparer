@@ -83,5 +83,29 @@ namespace LoanComparer.Data.Repositories
 
             return repayments;
         }
+
+        public async Task<bool> Save()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> IsSubscribe(string userId)
+        {
+            var subscribedUser = await _context.Subscribes.Where(s => s.UserId == userId && s.Active == true).FirstOrDefaultAsync();
+            if (subscribedUser == null)
+            {
+                return false;
+            }
+
+            if (subscribedUser.EndDate < DateTime.Today)
+            {
+                subscribedUser.Active = false;
+                _context.Entry(subscribedUser).State = EntityState.Modified;
+                await Save();
+                return false;
+            }
+
+            return true;
+        }
     }
 }
