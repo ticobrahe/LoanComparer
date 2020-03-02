@@ -59,15 +59,12 @@
                 @String.Format("{0:C}", ViewBag.totalAmount)
             </dd>
         </dl>
-        @using (Html.BeginForm("AccessLoan", "Loan", FormMethod.Post, new {@class = "form-br"}))
-        {
+       
+        <div class="row">
+            <div class="col-md-12">
+                @Html.ActionLink("Get Loan", "AccessLoan", new { id = @Model.Id }, new {@class="btn btn-success btn-block"})
 
-        }
-            <div class="row">
-                <div class="col-md-12">
-                    @Html.ActionLink("Get Loan", "ActivateLoan", new { id = @Model.Id }, new {@class="btn btn-success btn-block"})
-
-                </div>
             </div>
+        </div>
     </div>
 

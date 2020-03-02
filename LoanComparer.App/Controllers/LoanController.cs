@@ -63,16 +63,18 @@ namespace LoanComparer.App.Controllers
         [Authorize]
         public async Task<ActionResult> AccessLoan(int id)
         {
-            var loaner = _loanRepository.GetLoanDetail(id);
+            var loaner = await _loanRepository.GetLoanDetail(id);
             var userId = User.Identity.GetUserId();
             var isSubscribe = await _loanRepository.IsSubscribe(userId);
             if (!isSubscribe)
             {
                 TempData["active"] = false;
                 Session["providerId"] = id;
-            }
-
-            return View();
+                return RedirectToAction("Index", "Subscription");
+            } 
+            _loanRepository.LoanProviderCount(userId, loaner.Id);
+           await _loanRepository.Save();
+            return Redirect(loaner.SiteName);
         }
     }
 }

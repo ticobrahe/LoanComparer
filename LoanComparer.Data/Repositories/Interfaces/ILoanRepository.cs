@@ -16,5 +16,6 @@ namespace LoanComparer.Data.Repositories.Interfaces
         IEnumerable<RepaymentDetails> LoanRepayment(decimal totalAmount,int duration);
         Task<bool> Save();
         Task<bool> IsSubscribe(string userId);
+        void LoanProviderCount(string userId, int loanerId);
     }
 }

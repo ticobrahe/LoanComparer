@@ -107,5 +107,26 @@ namespace LoanComparer.Data.Repositories
 
             return true;
         }
+
+        public async void LoanProviderCount(string userId, int loanerId)
+        {
+            var visit = await _context.Visits.Where(c => c.UserId == userId && c.LoanerId == loanerId).FirstOrDefaultAsync();
+            if (visit == null)
+            {
+                var newVisit = new Visit
+                {
+                    LoanerId = loanerId,
+                    ClickCount = 1,
+                    UniqueCount = 1,
+                    UserId = userId
+                };
+                _context.Visits.Add(newVisit);
+            }
+            else
+            {
+                visit.ClickCount += 1;
+                _context.Entry(visit).State = EntityState.Modified;
+            }
+        }
     }
 }
