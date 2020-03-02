@@ -83,5 +83,63 @@ namespace LoanComparer.Data.Repositories
 
             return repayments;
         }
+
+        public async Task<bool> Save()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> IsSubscribe(string userId)
+        {
+            var subscribedUser = await _context.Subscribes.Where(s => s.UserId == userId && s.Active == true).FirstOrDefaultAsync();
+            if (subscribedUser == null)
+            {
+                return false;
+            }
+
+            if (subscribedUser.EndDate < DateTime.Today)
+            {
+                subscribedUser.Active = false;
+                _context.Entry(subscribedUser).State = EntityState.Modified;
+                await Save();
+                return false;
+            }
+
+            return true;
+        }
+
+        public void LoanProviderCount(string userId, int loanerId)
+        {
+            var visit = _context.Visits.Where(c => c.UserId == userId && c.LoanerId == loanerId).FirstOrDefault();
+            if (visit == null)
+            {
+                var newVisit = new Visit
+                {
+                    LoanerId = loanerId,
+                    ClickCount = 1,
+                    UniqueCount = 1,
+                    UserId = userId
+                };
+                _context.Visits.Add(newVisit);
+            }
+            else
+            {
+                visit.ClickCount += 1;
+                _context.Entry(visit).State = EntityState.Modified;
+            }
+        }
+
+        public void CreateSubscription(string userId)
+        {
+            var subscription = new Subscribe()
+            {
+                UserId = userId,
+                Active = true,
+                Amount = 1000,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(30)
+            };
+            _context.Subscribes.Add(subscription);
+        }
     }
 }
