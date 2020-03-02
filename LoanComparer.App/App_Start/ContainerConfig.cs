@@ -18,6 +18,7 @@ namespace LoanComparer.App
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterType<LoanRepository>().As<ILoanRepository>().InstancePerRequest();
+            builder.RegisterType<AdminRepository>().As<IAdminRepository>().InstancePerRequest();
             builder.RegisterType<LoanDbContext>().InstancePerRequest();
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
