@@ -17,5 +17,6 @@ namespace LoanComparer.Data.Repositories.Interfaces
         Task<bool> Save();
         Task<bool> IsSubscribe(string userId);
         void LoanProviderCount(string userId, int loanerId);
+        void CreateSubscription(string userId);
     }
 }

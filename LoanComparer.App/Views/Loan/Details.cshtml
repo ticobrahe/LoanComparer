@@ -4,65 +4,92 @@
 }
 
     <div class="container mt-72 details">
+        @if (TempData["Message"] != null)
+        {
+            <div class="text-center"><p class="alert alert-success">@TempData["Message"]</p></div>
+        }
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title green">Loan Provider</h3>
+                </div>
 
-        <h2>@Model.CompanyName</h2>
-        <dl class="dl-horizontal">
+                <div class="panel-body">
+                    <h4>@Model.CompanyName</h4>
 
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title green">Loan Type</h3>
+                </div>
 
-            <dt>LoanType</dt>
-            <dd>
-                @Model.LoanType
-            </dd>
-            <dt>Rate</dt>
-            <dd>
-                @Model.Rate %
-            </dd>
-            <dt>Terms</dt>
-            <dd>
-                @Model.Terms
-            </dd>
-            <dt>Principal Amount </dt>
-            <dd>@String.Format("{0:C}", ViewBag.principalAmount)</dd>
-        </dl>
+                <div class="panel-body">
+                    <h4>@Model.LoanType</h4>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title green">Principal Amount</h3>
+                </div>
+
+                <div class="panel-body">
+                    <h4>@String.Format("{0:C}", ViewBag.principalAmount)</h4>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title green">Total Repayment</h3>
+                </div>
+
+                <div class="panel-body">
+                    <h4>@String.Format("{0:C}", ViewBag.totalAmount)</h4>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-72">
         <div class="text-center mb-20"><h3>Repayment Details</h3></div>
         <table id="myTable" class="table table-striped table-responsive">
             <thead>
-                <tr>
-                    <th scope="col">Month</th>
-                    <th scope="col">Monthly Payment</th>
-                    <th scope="col">Amount Remaining</th>
-                    <th scope="col">Payment Percentage</th>
-                    <th scope="col">Interest</th>
-                </tr>
+            <tr>
+                <th scope="col">Month</th>
+                <th scope="col">Monthly Payment</th>
+                <th scope="col">Amount Remaining</th>
+                <th scope="col">Payment Percentage</th>
+                <th scope="col">Interest</th>
+            </tr>
             </thead>
             <tbody>
 
-                @foreach (var repaymentDetail in ViewBag.repayment)
-                {
-                    <tr>
-                        <td>@repaymentDetail.Duration</td>
-                        <td>@String.Format("{0:C}", repaymentDetail.MonthlyPayment)</td>
-                        <td>@String.Format("{0:C}", repaymentDetail.AmountLeft)</td>
-                        <td>@string.Format("{0:P}", repaymentDetail.PaymentPercentage)</td>
-                        <td>@Model.Rate%</td>
-                    </tr>
+            @foreach (var repaymentDetail in ViewBag.repayment)
+            {
+                <tr>
+                    <td>@repaymentDetail.Duration</td>
+                    <td>@String.Format("{0:C}", repaymentDetail.MonthlyPayment)</td>
+                    <td>@String.Format("{0:C}", repaymentDetail.AmountLeft)</td>
+                    <td>@string.Format("{0:P}", repaymentDetail.PaymentPercentage)</td>
+                    <td>@Model.Rate%</td>
+                </tr>
 
-                }
+            }
 
             </tbody>
         </table>
-        <dl class="dl-horizontal">
-
-
-            <dt>Total amount to pay</dt>
-            <dd>
-                @String.Format("{0:C}", ViewBag.totalAmount)
-            </dd>
-        </dl>
-       
+    </div>
         <div class="row">
             <div class="col-md-12">
-                @Html.ActionLink("Get Loan", "AccessLoan", new { id = @Model.Id }, new {@class="btn btn-success btn-block"})
+                @Html.ActionLink("Get Loan", "AccessLoan", new { id = @Model.Id }, new { @class = "btn btn-success btn-block" })
 
             </div>
         </div>

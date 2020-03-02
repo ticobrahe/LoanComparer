@@ -108,9 +108,9 @@ namespace LoanComparer.Data.Repositories
             return true;
         }
 
-        public async void LoanProviderCount(string userId, int loanerId)
+        public void LoanProviderCount(string userId, int loanerId)
         {
-            var visit = await _context.Visits.Where(c => c.UserId == userId && c.LoanerId == loanerId).FirstOrDefaultAsync();
+            var visit = _context.Visits.Where(c => c.UserId == userId && c.LoanerId == loanerId).FirstOrDefault();
             if (visit == null)
             {
                 var newVisit = new Visit
@@ -127,6 +127,19 @@ namespace LoanComparer.Data.Repositories
                 visit.ClickCount += 1;
                 _context.Entry(visit).State = EntityState.Modified;
             }
+        }
+
+        public void CreateSubscription(string userId)
+        {
+            var subscription = new Subscribe()
+            {
+                UserId = userId,
+                Active = true,
+                Amount = 1000,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(30)
+            };
+            _context.Subscribes.Add(subscription);
         }
     }
 }
