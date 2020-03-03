@@ -29,7 +29,7 @@ namespace LoanComparer.Data.Repositories
                     CompanyName = loan.CompanyName,
                     LoanType = loan.LoanType,
                     UniqueVisit = d == null ? 0:  d.UniqueCount,
-                    Visits = d == null ? 0 :  d.ClickCount
+                    Visits = d == null ? 0 :  d.VisitCount
                 };
             return await query.ToListAsync();
         }

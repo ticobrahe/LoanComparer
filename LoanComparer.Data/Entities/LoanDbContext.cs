@@ -20,6 +20,7 @@ namespace LoanComparer.Data.Entities
         public virtual DbSet<LoanerWebsite> LoanerWebsites { get; set; }
         public virtual DbSet<Subscribe> Subscribes { get; set; }
         public virtual DbSet<Visit> Visits { get; set; }
+        public virtual DbSet<LoanRequest> LoanRequests { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -87,6 +88,14 @@ namespace LoanComparer.Data.Entities
             modelBuilder.Entity<Subscribe>()
                 .Property(e => e.Amount)
                 .HasPrecision(18, 4);
+
+            modelBuilder.Entity<LoanRequest>()
+                .Property(e => e.Amount)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<LoanRequest>()
+                .Property(e => e.LoanType)
+                .IsUnicode(false);
         }
     }
 }

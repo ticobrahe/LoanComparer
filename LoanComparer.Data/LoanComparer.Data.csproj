@@ -54,9 +54,10 @@
     <Compile Include="Entities\AspNetUser.cs" />
     <Compile Include="Entities\AspNetUserClaim.cs" />
     <Compile Include="Entities\AspNetUserLogin.cs" />
-    <Compile Include="Entities\LoanDbContext.cs" />
     <Compile Include="Entities\Loaner.cs" />
     <Compile Include="Entities\LoanerWebsite.cs" />
+    <Compile Include="Entities\LoanDbContext.cs" />
+    <Compile Include="Entities\LoanRequest.cs" />
     <Compile Include="Entities\Subscribe.cs" />
     <Compile Include="Entities\Visit.cs" />
     <Compile Include="Models\AdminHomeModel.cs" />

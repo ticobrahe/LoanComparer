@@ -116,7 +116,7 @@ namespace LoanComparer.Data.Repositories
                 var newVisit = new Visit
                 {
                     LoanerId = loanerId,
-                    ClickCount = 1,
+                    VisitCount = 1,
                     UniqueCount = 1,
                     UserId = userId
                 };
@@ -124,7 +124,7 @@ namespace LoanComparer.Data.Repositories
             }
             else
             {
-                visit.ClickCount += 1;
+                visit.VisitCount += 1;
                 _context.Entry(visit).State = EntityState.Modified;
             }
         }

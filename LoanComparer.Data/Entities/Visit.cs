@@ -9,14 +9,13 @@ namespace LoanComparer.Data.Entities
     [Table("Visit")]
     public partial class Visit
     {
-        [Key]
-        public int ClickId { get; set; }
+        public int VisitId { get; set; }
 
         [Required]
         [StringLength(128)]
         public string UserId { get; set; }
 
-        public int ClickCount { get; set; }
+        public int VisitCount { get; set; }
 
         public int UniqueCount { get; set; }
 
