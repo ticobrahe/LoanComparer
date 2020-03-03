@@ -17,7 +17,7 @@ namespace LoanComparer.App.Controllers
         {
             _adminRepository = adminRepository;
         }
-        // GET: Admin
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var loanRequests = await _adminRepository.GetAllLoanRequest();
@@ -27,12 +27,7 @@ namespace LoanComparer.App.Controllers
             return View(visit);
         }
 
-        [Authorize]
-        [HttpGet]
-        public ActionResult CreateProvider()
-        {
-            return View();
-        }
+       
 
     }
 }

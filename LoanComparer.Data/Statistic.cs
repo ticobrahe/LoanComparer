@@ -9,11 +9,13 @@ namespace LoanComparer.Data
 {
     public class Statistic
     {
-        public decimal Average { get; set; }
+        public decimal AverageAmount { get; set; }
         public decimal Max { get; set; }
         public decimal Min { get; set; }
         public int Count { get; set; } = 0;
         public Decimal Total { get; set; }
+        public decimal TotalDuration { get; set; }
+        public decimal AverageDuration { get; set; }
         public Statistic()
         {
             Min = decimal.MaxValue;
@@ -21,6 +23,7 @@ namespace LoanComparer.Data
         }
         public Statistic Accumulate(LoanRequest data)
         {
+            TotalDuration += data.Duration;
             Total += data.Amount;
             Count += 1;
             Max = Math.Max(Max, data.Amount);
@@ -31,7 +34,8 @@ namespace LoanComparer.Data
 
         public Statistic Compute()
         {
-            Average = Total / Count;
+            AverageAmount = Total / Count;
+            AverageDuration = Math.Floor(TotalDuration / Count);
             return this;
         }
     }
