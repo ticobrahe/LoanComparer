@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using LoanComparer.Data.Models.ViewModels;
+using AutoMapper;
+using LoanComparer.App.Models;
+using LoanComparer.Data.Models;
 using LoanComparer.Data.Repositories.Interfaces;
 using Microsoft.AspNet.Identity;
 
@@ -13,11 +15,13 @@ namespace LoanComparer.App.Controllers
     public class LoanController : Controller
     {
         private readonly ILoanRepository _loanRepository;
+        private readonly IMapper _mapper;
 
         // GET: Loan
-        public LoanController(ILoanRepository loanRepository)
+        public LoanController(ILoanRepository loanRepository, IMapper mapper)
         {
             _loanRepository = loanRepository;
+            _mapper = mapper;
         }
         public ActionResult Index()
         {
@@ -38,7 +42,8 @@ namespace LoanComparer.App.Controllers
             {
                 Session["amount"] = model.Amount;
                 Session["duration"] = model.Duration;
-                var loaners = await _loanRepository.FindLoaner(model);
+                var loanRequest = _mapper.Map<LoanRequestInfo>(model);
+                var loaners = await _loanRepository.FindLoaner(loanRequest);
                 ViewBag.Count = loaners.Count();
                 return View(loaners);
             }

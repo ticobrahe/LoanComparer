@@ -19,7 +19,7 @@ namespace LoanComparer.Data.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<LoanerViewModel> >FindLoaner(HomeViewModel model)
+        public async Task<IEnumerable<LoanerViewModel> >FindLoaner(LoanRequestInfo model)
         {
             var query = from loan in _context.Loaners
                 where loan.MinimumAmount <= model.Amount &&

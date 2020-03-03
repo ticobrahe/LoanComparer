@@ -61,8 +61,8 @@
     <Compile Include="Entities\Subscribe.cs" />
     <Compile Include="Entities\Visit.cs" />
     <Compile Include="Models\AdminHomeModel.cs" />
+    <Compile Include="Models\LoanRequestInfo.cs" />
     <Compile Include="Models\RepaymentDetails.cs" />
-    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\LoanerDetailViewModel.cs" />
     <Compile Include="Models\ViewModels\LoanerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
