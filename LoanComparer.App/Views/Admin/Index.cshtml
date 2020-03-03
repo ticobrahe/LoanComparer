@@ -1,0 +1,85 @@
+﻿@model IEnumerable<LoanComparer.Data.Models.AdminHomeModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container mt-72">
+    <h2 class="text-center">Loan Request Analysis</h2>
+    <div class="row mt-72">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title green">Average Loan Request Amount</h3>
+                </div>
+
+                <div class="panel-body">
+                    <h4>@String.Format("{0:C}", ViewBag.stat.AverageAmount)</h4>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title green">Minimum Loan Request Amount</h3>
+                </div>
+
+                <div class="panel-body">
+                    <h4>@String.Format("{0:C}", ViewBag.stat.Min)</h4>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title green">Highest Loan Request Amount</h3>
+                </div>
+
+                <div class="panel-body">
+                    <h4>@String.Format("{0:C}", ViewBag.stat.Max)</h4>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title green">Average Loan Request Duration</h3>
+                </div>
+
+                <div class="panel-body">
+                    <h4>@ViewBag.stat.AverageDuration</h4>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <table id="myTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Company</th>
+            <th scope="col">LoanType</th>
+            <th scope="col">Unique visit</th>
+            <th scope="col">Number of visit</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var visit in Model)
+        {
+            <tr>
+                <td>@visit.CompanyName</td>
+                <td>@visit.LoanType</td>
+                <td>@visit.UniqueVisit</td>
+                <td>@visit.Visits</td>
+            </tr>
+        }
+
+
+
+
+        </tbody>
+    </table>
+</div>
+

@@ -19,7 +19,7 @@ namespace LoanComparer.Data.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<LoanerViewModel> >FindLoaner(HomeViewModel model)
+        public async Task<IEnumerable<LoanerViewModel> >FindLoaner(LoanRequestInfo model)
         {
             var query = from loan in _context.Loaners
                 where loan.MinimumAmount <= model.Amount &&
@@ -116,7 +116,7 @@ namespace LoanComparer.Data.Repositories
                 var newVisit = new Visit
                 {
                     LoanerId = loanerId,
-                    ClickCount = 1,
+                    VisitCount = 1,
                     UniqueCount = 1,
                     UserId = userId
                 };
@@ -124,7 +124,7 @@ namespace LoanComparer.Data.Repositories
             }
             else
             {
-                visit.ClickCount += 1;
+                visit.VisitCount += 1;
                 _context.Entry(visit).State = EntityState.Modified;
             }
         }
@@ -140,6 +140,11 @@ namespace LoanComparer.Data.Repositories
                 EndDate = DateTime.Now.AddDays(30)
             };
             _context.Subscribes.Add(subscription);
+        }
+
+        public void CreateLoanRequest(LoanRequest requestInfo)
+        {
+            _context.LoanRequests.Add(requestInfo);
         }
     }
 }

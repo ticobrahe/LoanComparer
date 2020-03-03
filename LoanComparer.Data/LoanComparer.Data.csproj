@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FB05C888-C370-4F97-B9EE-0C0A577D4430}</ProjectGuid>
+    <ProjectGuid>{5F87E53E-080F-4514-90BF-F0BDF9491D3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LoanComparer.Data</RootNamespace>
@@ -54,20 +54,24 @@
     <Compile Include="Entities\AspNetUser.cs" />
     <Compile Include="Entities\AspNetUserClaim.cs" />
     <Compile Include="Entities\AspNetUserLogin.cs" />
-    <Compile Include="Entities\LoanDbContext.cs" />
     <Compile Include="Entities\Loaner.cs" />
     <Compile Include="Entities\LoanerWebsite.cs" />
+    <Compile Include="Entities\LoanModel.cs" />
+    <Compile Include="Entities\LoanRequest.cs" />
     <Compile Include="Entities\Subscribe.cs" />
     <Compile Include="Entities\Visit.cs" />
+    <Compile Include="Models\AdminHomeModel.cs" />
+    <Compile Include="Models\LoanRequestInfo.cs" />
     <Compile Include="Models\RepaymentDetails.cs" />
-    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\LoanerDetailViewModel.cs" />
     <Compile Include="Models\ViewModels\LoanerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AdminRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IAdminRepository.cs" />
     <Compile Include="Repositories\Interfaces\ILoanRepository.cs" />
     <Compile Include="Repositories\LoanRepository.cs" />
+    <Compile Include="Statistic.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
