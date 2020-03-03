@@ -33,5 +33,10 @@ namespace LoanComparer.Data.Repositories
                 };
             return await query.ToListAsync();
         }
+
+        public async Task<IEnumerable<LoanRequest>> GetAllLoanRequest()
+        {
+            return await _context.LoanRequests.ToListAsync();
+        }
     }
 }

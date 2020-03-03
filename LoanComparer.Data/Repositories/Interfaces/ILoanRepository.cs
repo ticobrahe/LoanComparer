@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LoanComparer.Data.Entities;
 using LoanComparer.Data.Models;
 using LoanComparer.Data.Models.ViewModels;
 
@@ -18,6 +19,6 @@ namespace LoanComparer.Data.Repositories.Interfaces
         Task<bool> IsSubscribe(string userId);
         void LoanProviderCount(string userId, int loanerId);
         void CreateSubscription(string userId);
-        
+        void CreateLoanRequest(LoanRequest requestInfo);
     }
 }

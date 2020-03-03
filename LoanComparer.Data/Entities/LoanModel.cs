@@ -18,9 +18,9 @@ namespace LoanComparer.Data.Entities
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Loaner> Loaners { get; set; }
         public virtual DbSet<LoanerWebsite> LoanerWebsites { get; set; }
+        public virtual DbSet<LoanRequest> LoanRequests { get; set; }
         public virtual DbSet<Subscribe> Subscribes { get; set; }
         public virtual DbSet<Visit> Visits { get; set; }
-        public virtual DbSet<LoanRequest> LoanRequests { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -85,10 +85,6 @@ namespace LoanComparer.Data.Entities
                 .WithRequired(e => e.LoanerWebsite)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Subscribe>()
-                .Property(e => e.Amount)
-                .HasPrecision(18, 4);
-
             modelBuilder.Entity<LoanRequest>()
                 .Property(e => e.Amount)
                 .HasPrecision(18, 4);
@@ -96,6 +92,10 @@ namespace LoanComparer.Data.Entities
             modelBuilder.Entity<LoanRequest>()
                 .Property(e => e.LoanType)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Subscribe>()
+                .Property(e => e.Amount)
+                .HasPrecision(18, 4);
         }
     }
 }

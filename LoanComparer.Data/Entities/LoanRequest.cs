@@ -9,23 +9,14 @@ namespace LoanComparer.Data.Entities
     [Table("LoanRequest")]
     public partial class LoanRequest
     {
-        [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
         public decimal Amount { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
+        [Required]
         [StringLength(50)]
         public string LoanType { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Duration { get; set; }
     }
 }

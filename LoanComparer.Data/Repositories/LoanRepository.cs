@@ -141,5 +141,10 @@ namespace LoanComparer.Data.Repositories
             };
             _context.Subscribes.Add(subscription);
         }
+
+        public void CreateLoanRequest(LoanRequest requestInfo)
+        {
+            _context.LoanRequests.Add(requestInfo);
+        }
     }
 }

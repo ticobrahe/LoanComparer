@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using LoanComparer.App.Models;
+using LoanComparer.Data.Entities;
 using LoanComparer.Data.Models;
 using LoanComparer.Data.Repositories.Interfaces;
 using Microsoft.AspNet.Identity;
@@ -42,8 +43,11 @@ namespace LoanComparer.App.Controllers
             {
                 Session["amount"] = model.Amount;
                 Session["duration"] = model.Duration;
+                var createLoanRequest = _mapper.Map<LoanRequest>(model);
                 var loanRequest = _mapper.Map<LoanRequestInfo>(model);
                 var loaners = await _loanRepository.FindLoaner(loanRequest);
+                _loanRepository.CreateLoanRequest(createLoanRequest);
+                await _loanRepository.Save();
                 ViewBag.Count = loaners.Count();
                 return View(loaners);
             }

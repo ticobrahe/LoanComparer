@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AutoMapper;
+using LoanComparer.Data.Entities;
 using LoanComparer.Data.Models;
 
 namespace LoanComparer.App.Models
@@ -12,6 +13,7 @@ namespace LoanComparer.App.Models
         public LoanProfile()
         {
             CreateMap<HomeViewModel, LoanRequestInfo>().ReverseMap();
+            CreateMap<HomeViewModel, LoanRequest>();
         }
     }
 }
