@@ -3,21 +3,25 @@
     ViewBag.Title = "Index";
 }
 
-<div class="container mt-72">
-    <h2>Roles Listing </h2>
-
-    @Html.ActionLink("Create New Role", "Create") | @Html.ActionLink("Manage User Role", "ManageUsers")
-    <hr />
-    <div>
-        @foreach (var role in Model)
+    <div class="container mt-72">
+        @if (TempData["ResultMessage"] != null)
         {
-            <p>
-                <strong>@role.Name | </strong>
-                <span onclick="return confirm('Are you sure you want to delete?')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color:red;">Delete</a></span> |
-                @Html.ActionLink("Edit", "Edit", new { Id = @role.Id })
-            </p>
+        <p class="alert alert-success">@TempData["ResultMessage"]</p>
         }
-        @ViewBag.Deleted
+        <h2>Roles Listing </h2>
+
+        @Html.ActionLink("Create New Role", "Create") | @Html.ActionLink("Manage User Role", "ManageUsers")
+        <hr />
+        <div>
+            @foreach (var role in Model)
+            {
+                <p>
+                    <strong>@role.Name | </strong>
+                    <span onclick="return confirm('Are you sure you want to delete?')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color: red;">Delete</a></span> |
+                    @Html.ActionLink("Edit", "Edit", new { Id = @role.Id })
+                </p>
+            }
+            @ViewBag.Deleted
+        </div>
     </div>
-</div>
 

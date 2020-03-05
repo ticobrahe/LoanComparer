@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using LoanComparer.App.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -22,9 +24,6 @@ namespace LoanComparer.App.Controllers
         {
             _context = new ApplicationDbContext();
         }
-        //private ApplicationDbContext context = new ApplicationDbContext();
-
-        // GET: Roles
         public ActionResult Index()
         {
             return View(_context.Roles.ToList());
@@ -32,8 +31,6 @@ namespace LoanComparer.App.Controllers
 
         public ActionResult Create()
         {
-
-
             return View();
         }
 
@@ -55,32 +52,30 @@ namespace LoanComparer.App.Controllers
                 return View();
             }
         }
-        //public ActionResult Edit(string roleName)
-        //{
-        //    var thisRole = context.Roles.Where(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase))
-        //        .FirstOrDefault();
+        public ActionResult Edit(string Id)
+        {
+            var role = _context.Roles.Find(Id);
+            return View(role);
+        }
 
-        //    return View(thisRole);
-        //}
-
-        //
-        // POST: /Roles/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(IdentityRole role)
-        //{
-        //    try
-        //    {
-        //        context.Entry(role).State = System.Data.Entity.EntityState.Modified;
-        //        context.SaveChanges();
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(IdentityRole role)
+        {
+            try
+            {
+                //var role = _context.Roles.Find(Id);
+                _context.Entry(role).State = EntityState.Modified;
+                _context.SaveChanges();
+                TempData["ResultMessage"] = "Role Updated successfully !";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["ResultMessage"] = "Role update failed";
+                return View();
+            }
+        }
 
         //#endregion
 
