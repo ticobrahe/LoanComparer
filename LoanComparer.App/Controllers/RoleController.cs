@@ -72,14 +72,29 @@ namespace LoanComparer.App.Controllers
             }
             catch
             {
-                TempData["ResultMessage"] = "Role update failed";
-                return View();
+                TempData["error"] = "Role update failed";
+                return RedirectToAction("Index");
             }
         }
-
-        //#endregion
-
-
+        
+        public ActionResult Delete(string Id)
+        {
+            //var thisRole = context.Roles.Where(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            try
+            {
+                var role = _context.Roles.Find(Id);
+                _context.Roles.Remove(role);
+                _context.SaveChanges();
+                TempData["ResultMessage"] = $"{role.Name} Role was Deleted Successfully";
+                return RedirectToAction("Index");
+            }
+            catch 
+            {
+                TempData["error"] = "Deletion failed";
+                return RedirectToAction("Index");
+            }
+            
+        }
 
         //public ActionResult ManageUsers()
         //{

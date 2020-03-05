@@ -32,7 +32,9 @@ body a{
 .wrapper {
 	min-height: 80vh;
 }
-
+.delete {
+	color: red;
+}
 .mt-72 {
 	margin-top: 72px;
 }

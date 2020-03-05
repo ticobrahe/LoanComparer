@@ -6,9 +6,13 @@
     <div class="container mt-72">
         @if (TempData["ResultMessage"] != null)
         {
-        <p class="alert alert-success">@TempData["ResultMessage"]</p>
+            <p class="alert alert-success">@TempData["ResultMessage"]</p>
         }
-        <h2>Roles Listing </h2>
+        @if (TempData["error"] != null)
+        {
+            <p class="alert alert-danger">@TempData["error"]</p>
+        }
+        <h2>Roles </h2>
 
         @Html.ActionLink("Create New Role", "Create") | @Html.ActionLink("Manage User Role", "ManageUsers")
         <hr />
@@ -17,7 +21,7 @@
             {
                 <p>
                     <strong>@role.Name | </strong>
-                    <span onclick="return confirm('Are you sure you want to delete?')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color: red;">Delete</a></span> |
+                    <span onclick="return confirm('Are you sure you want to delete?')"> @Html.ActionLink("Delete", "Delete", new { Id = @role.Id},new {@class = "delete"})</span> |
                     @Html.ActionLink("Edit", "Edit", new { Id = @role.Id })
                 </p>
             }
