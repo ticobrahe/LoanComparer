@@ -10,7 +10,7 @@
     }
     <h2>Create</h2>
 
-    @Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Manage User Role", "ManageUsers")
+    @Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Create User Role", "CreateUserRole")
     <hr/>
     @using (Html.BeginForm())
     {
@@ -23,7 +23,7 @@
         <div class="form-group">
             <input type="text" name="roleName" class="form-control"/>
         </div>
-        <input type="submit" value="Save" class="btn btn-success"/>
+        <input type="submit" value="Save" class="btn btn-success btn-submit"/>
     }
 
 </div>

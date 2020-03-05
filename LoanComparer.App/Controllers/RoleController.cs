@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -14,6 +15,7 @@ namespace LoanComparer.App.Controllers
     public class RoleController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public RoleController(ApplicationDbContext context)
         {
@@ -64,7 +66,6 @@ namespace LoanComparer.App.Controllers
         {
             try
             {
-                //var role = _context.Roles.Find(Id);
                 _context.Entry(role).State = EntityState.Modified;
                 _context.SaveChanges();
                 TempData["ResultMessage"] = "Role Updated successfully !";
@@ -79,7 +80,6 @@ namespace LoanComparer.App.Controllers
         
         public ActionResult Delete(string Id)
         {
-            //var thisRole = context.Roles.Where(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
             try
             {
                 var role = _context.Roles.Find(Id);
@@ -96,55 +96,72 @@ namespace LoanComparer.App.Controllers
             
         }
 
-        //public ActionResult ManageUsers()
-        //{
-        //    // prepopulat roles for the view dropdown
-        //    var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
-        //        new SelectListItem {Value = rr.Name.ToString(), Text = rr.Name}).ToList();
-        //    ViewBag.Roles = list;
-        //    return View();
-        //}
+        public ActionResult CreateUserRole()
+        {
+            var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            ViewBag.Roles = list;
+            return View();
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult RoleAddToUser(string UserName, string RoleName)
-        //{
-        //    var user = context.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase))
-        //        .FirstOrDefault();
-        //    var manager = new ApplicationUserManager(new UserStore<User>(context));
-        //    manager.AddToRole(user.Id, RoleName);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddUserToRole(ManageUserViewModel model)
+        {
+            
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                if (user == null)
+                {
+                    TempData["Error"] = "User not found";
+                }
+                var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(_context));
+                if (await manager.IsInRoleAsync(user.Id, model.RoleName))
+                {
+                    TempData["Error"] = $"User already in {model.RoleName} role";
+                    return RedirectToAction("ManageUsers");
+                }
+                manager.AddToRole(user.Id, model.RoleName);
 
-        //    ViewBag.ResultMessage = "Role created successfully !";
+                TempData["Message"] = "Role created successfully !";
+                return RedirectToAction("ManageUsers");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ManageUsers");
+            }
+        }
 
-        //    // populate roles for the view dropdown
-        //    var list = context.Roles.OrderBy(r => r.Name).ToList()
-        //        .Select(rr => new SelectListItem {Value = rr.Name.ToString(), Text = rr.Name}).ToList();
-        //    ViewBag.Roles = list;
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> GetRole(ManageUserViewModel model)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                if (user == null)
+                {
+                    TempData["Error"] = "User not found";
+                    return View("ManageUsers");
+                }
+                var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(_context));
+                var userRoles = manager.GetRoles(user.Id);
+                if (userRoles == null)
+                {
+                    TempData["Error"] = "User does not belong to any role";
+                    return View("ManageUsers");
+                }
 
-        //    return View("ManageUsers");
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult GetRoles(string UserName)
-        //{
-        //    if (!string.IsNullOrWhiteSpace(UserName))
-        //    {
-        //        User user = context.Users
-        //            .Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase))
-        //            .FirstOrDefault();
-        //        var manager = new ApplicationUserManager(new UserStore<User>(context));
-
-        //        ViewBag.RolesForThisUser = manager.GetRoles(user.Id);
-
-        //        // prepopulat roles for the view dropdown
-        //        var list = context.Roles.OrderBy(r => r.Name).ToList()
-        //            .Select(rr => new SelectListItem {Value = rr.Name.ToString(), Text = rr.Name}).ToList();
-        //        ViewBag.Roles = list;
-        //    }
-
-        //    return View("ManageUsers");
-        //}
+                TempData["Data"] = userRoles;
+                return View("ManageUsers");
+            }
+            catch
+            {
+                return View("ManageUsers");
+            }
+           
+        }
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
