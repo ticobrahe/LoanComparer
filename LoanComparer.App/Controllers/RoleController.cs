@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using LoanComparer.App.Models;
+using LoanComparer.Data.Repositories.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -15,9 +16,8 @@ namespace LoanComparer.App.Controllers
     public class RoleController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RoleController(ApplicationDbContext context)
+        public RoleController(ApplicationDbContext context, IAdminRepository a)
         {
             _context = context;
         }
@@ -106,62 +106,74 @@ namespace LoanComparer.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddUserToRole(ManageUserViewModel model)
+        public async Task<ActionResult> CreateUserRole(ManageUserViewModel model)
         {
-            
+            var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+           
             try
             {
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user == null)
                 {
-                    TempData["Error"] = "User not found";
+                    ViewBag.Error = "User not found";
+                    ViewBag.Roles = list;
+                    return View();
                 }
                 var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(_context));
                 if (await manager.IsInRoleAsync(user.Id, model.RoleName))
                 {
-                    TempData["Error"] = $"User already in {model.RoleName} role";
-                    return RedirectToAction("ManageUsers");
+                    ViewBag.Error = $"User already in {model.RoleName} role";
+                    ViewBag.Roles = list;
+                    return View();
                 }
                 manager.AddToRole(user.Id, model.RoleName);
-
-                TempData["Message"] = "Role created successfully !";
-                return RedirectToAction("ManageUsers");
+                ViewBag.Message = "Role created successfully !";
+                ViewBag.Roles = list;
+                return View();
             }
-            catch (Exception)
+            catch
             {
-                return RedirectToAction("ManageUsers");
+                return View();
             }
+        }
+
+        public ActionResult GetUserRole()
+        {
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> GetRole(ManageUserViewModel model)
+        public async Task<ActionResult> GetUserRole(ManageUserViewModel model)
         {
             try
             {
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user == null)
                 {
-                    TempData["Error"] = "User not found";
-                    return View("ManageUsers");
+                    ViewBag.Error = "User not found";
+                    return View();
                 }
                 var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(_context));
                 var userRoles = manager.GetRoles(user.Id);
                 if (userRoles == null)
                 {
-                    TempData["Error"] = "User does not belong to any role";
-                    return View("ManageUsers");
+                    ViewBag.Error = "User does not belong to any role";
+                    return View();
                 }
 
-                TempData["Data"] = userRoles;
-                return View("ManageUsers");
+                ViewBag.Data = userRoles;
+                return View();
             }
             catch
             {
-                return View("ManageUsers");
+                return View();
             }
            
         }
+
+       
+       
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

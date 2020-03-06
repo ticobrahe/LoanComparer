@@ -1,3 +1,6 @@
+using LoanComparer.Data.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace LoanComparer.Data.Entities
 {
     using System;
@@ -5,7 +8,7 @@ namespace LoanComparer.Data.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class LoanDbContext : DbContext
+    public partial class LoanDbContext : IdentityDbContext<AppUser>
     {
         public LoanDbContext()
             : base("name=LoanModel")

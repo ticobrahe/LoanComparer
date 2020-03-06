@@ -1,27 +1,27 @@
 ﻿@model LoanComparer.App.Models.ManageUserViewModel
 @{
     ViewBag.Title = "ManageUsers";
-    var userRoles = (List<string>) TempData["Data"];
+
 }
 
 
 
     <div class="container mt-72">
-        @if (TempData["Message"] != null)
+        @if (ViewBag.Message  != null)
         {
-            <p class="alert alert-success">@TempData["Message"]</p>
+            <p class="alert alert-success">@ViewBag.Message </p>
         }
-        @if (TempData["Error"] != null)
+        @if (ViewBag.Error  != null)
         {
-            <p class="alert alert-danger">@TempData["Error"]</p>
+            <p class="alert alert-danger">@ViewBag.Error </p>
         }
         <h3>Create User Roles</h3>
-        @Html.ActionLink("Create New Role", "Create") | @Html.ActionLink("All roles", "Index")
+        @Html.ActionLink("Find user role", "GetUserRole") | @Html.ActionLink("All roles", "Index")
         <hr />
 
         <h4 class="pb-20">Add user to role</h4>
 
-        @using (Html.BeginForm("AddUserToRole", "Role"))
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
@@ -48,34 +48,7 @@
             <input type="submit" value="Save" class="btn btn-success btn-submit" />
         }
         <hr />
-        <h4 class="pb-20">Find user role</h4>
-        @using (Html.BeginForm("GetRole", "Role"))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-group pb-20">
-                <div class="col-md-2 control-label">
-                    <label for="email">Email</label>
-                </div>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <input type="submit" value="Save" class="btn btn-success btn-submit" />
-        }
-
-        @if (userRoles != null)
-        {
-            <div style="background-color: yellow;">
-                <h3>Roles for this user </h3>
-                <ol>
-                    @foreach (string s in userRoles)
-                    {
-                        <li>@s</li>
-                    }
-                </ol>
-            </div>
-        }
+        
 
         <hr />
         <h3>Delete A User from a Role</h3>
