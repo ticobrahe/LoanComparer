@@ -13,11 +13,12 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LoanComparer.App.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class RoleController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public RoleController(ApplicationDbContext context, IAdminRepository a)
+        public RoleController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -156,7 +157,7 @@ namespace LoanComparer.App.Controllers
                 }
                 var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(_context));
                 var userRoles = manager.GetRoles(user.Id);
-                if (userRoles == null)
+                if (userRoles.Count == 0)
                 {
                     ViewBag.Error = "User does not belong to any role";
                     return View();
@@ -172,35 +173,42 @@ namespace LoanComparer.App.Controllers
            
         }
 
-       
-       
+        public ActionResult DeleteUserRole()
+        {
+            var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            ViewBag.Roles = list;
+            return View();
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteRoleForUser(string UserName, string RoleName)
-        //{
-        //    var manager = new ApplicationUserManager(new UserStore<User>(context));
 
-        //    User user = context.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase))
-        //        .FirstOrDefault();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async  Task<ActionResult> DeleteUserRole(ManageUserViewModel model)
+        {
+            var list = _context.Roles.OrderBy(r => r.Name).ToList()
+                .Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            if (user == null)
+            {
+                ViewBag.Error = "User not found";
+                ViewBag.Roles = list;
+                return View();
+            }
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(_context));
+            if (await manager.IsInRoleAsync(user.Id, model.RoleName))
+            {
+                manager.RemoveFromRole(user.Id, model.RoleName);
+                ViewBag.Message = "User removed from this role successfully !";
+            }
+            else
+            {
+                ViewBag.Error = "This user doesn't belong to selected role.";
+            }
+            ViewBag.Roles = list;
 
-        //    if (manager.IsInRole(user.Id, RoleName))
-        //    {
-        //        manager.RemoveFromRole(user.Id, RoleName);
-        //        ViewBag.ResultMessage = "Role removed from this user successfully !";
-        //    }
-        //    else
-        //    {
-        //        ViewBag.ResultMessage = "This user doesn't belong to selected role.";
-        //    }
-
-        //    // prepopulat roles for the view dropdown
-        //    var list = context.Roles.OrderBy(r => r.Name).ToList()
-        //        .Select(rr => new SelectListItem {Value = rr.Name.ToString(), Text = rr.Name}).ToList();
-        //    ViewBag.Roles = list;
-
-        //    return View("ManageUsers");
-        //}
+            return View();
+        }
 
     }
 }

@@ -4,6 +4,10 @@
 }
 
     <div class="container mt-72">
+        @if (ViewBag.Error != null)
+        {
+            <p class="alert alert-danger">@ViewBag.Error </p>
+        }
         @Html.ActionLink("Create user role", "CreateUserRole") | @Html.ActionLink("All roles", "Index")
         <hr />
         <h3 class="pb-20">Find user role</h3>
@@ -25,7 +29,7 @@
 
         @if (ViewBag.Data != null)
         {
-           
+
             <h4 class="mb-20" style="margin-top: 20px">Roles for this user </h4>
             <ol>
                 @foreach (string role in ViewBag.Data)
@@ -33,7 +37,10 @@
                     <li>@role</li>
                 }
             </ol>
-            
+
         }
 
     </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

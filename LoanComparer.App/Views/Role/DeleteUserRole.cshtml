@@ -1,0 +1,52 @@
+﻿@model LoanComparer.App.Models.ManageUserViewModel
+@{
+    ViewBag.Title = "DeleteUserRole";
+}
+
+<div class="container mt-72">
+    @if (ViewBag.Message != null)
+    {
+        <p class="alert alert-success">@ViewBag.Message </p>
+    }
+    @if (ViewBag.Error != null)
+    {
+        <p class="alert alert-danger">@ViewBag.Error </p>
+    }
+    <h3>Delete User from roles</h3>
+    @Html.ActionLink("Find user role", "GetUserRole") | @Html.ActionLink("All roles", "Index")
+    <hr />
+
+    <h4 class="pb-20">Add user to role</h4>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="form-group pb-60">
+            <div class="col-md-2 control-label">
+                <label for="email">Email</label>
+            </div>
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label for="RoleName">Role Name</label>
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "select" })
+                @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <input type="submit" value="Delete" class="btn btn-success btn-submit" />
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

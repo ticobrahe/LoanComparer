@@ -733,7 +733,7 @@ button.close {
 		border-bottom: 5px solid #0aab8a;
 		transition: 0.5s all;
 	}
-.main form input[type="submit"], {
+.main form input[type="submit"] {
 		background:#f78e7e;
 	color: #FFFFFF;
 	text-align: center;

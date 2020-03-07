@@ -22,7 +22,5 @@ namespace LoanComparer.Data.Entities
         public int LoanerId { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
-
-        public virtual Loaner Loaner { get; set; }
     }
 }

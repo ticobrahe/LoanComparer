@@ -49,23 +49,6 @@
         }
         <hr />
         
-
-        <hr />
-        <h3>Delete A User from a Role</h3>
-
-        @using (Html.BeginForm("DeleteRoleForUser", "Roles"))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-
-            <p>
-                Username : @Html.TextBox("UserName")
-                Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")
-
-            </p>
-
-            <input type="submit" value="Delete this user from Role" />
-        }
     </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -9,6 +9,7 @@ using LoanComparer.Data.Repositories.Interfaces;
 
 namespace LoanComparer.App.Controllers
 {
+   
     public class AdminController : Controller
     {
         private readonly IAdminRepository _adminRepository;
@@ -17,7 +18,6 @@ namespace LoanComparer.App.Controllers
         {
             _adminRepository = adminRepository;
         }
-        [Authorize]
         public async Task<ActionResult> Index()
         {
             var loanRequests = await _adminRepository.GetAllLoanRequest();

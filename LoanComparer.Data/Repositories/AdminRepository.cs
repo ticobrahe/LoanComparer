@@ -39,9 +39,6 @@ namespace LoanComparer.Data.Repositories
             return await _context.LoanRequests.ToListAsync();
         }
 
-        public async Task<AppUser> GetUserByEmail(string email)
-        {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        }
+        
     }
 }
