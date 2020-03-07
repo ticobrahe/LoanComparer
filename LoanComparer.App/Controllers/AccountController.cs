@@ -9,21 +9,25 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LoanComparer.App.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LoanComparer.App.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationDbContext context )
         {
+            _context = context;
             UserManager = userManager;
             SignInManager = signInManager;
         }
@@ -72,13 +76,20 @@ namespace LoanComparer.App.Controllers
             {
                 return View(model);
             }
-
+            
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var user = await UserManager.FindByNameAsync(model.Email);
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(_context));
+            
             switch (result)
             {
                 case SignInStatus.Success:
+                    if (await manager.IsInRoleAsync(user.Id, "admin"))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -156,7 +167,9 @@ namespace LoanComparer.App.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(_context));
+                    manager.AddToRole(user.Id, "user");
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

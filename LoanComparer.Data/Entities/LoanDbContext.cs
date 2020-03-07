@@ -42,14 +42,12 @@ namespace LoanComparer.Data.Entities
             modelBuilder.Entity<AspNetUser>()
                 .HasMany(e => e.Visits)
                 .WithRequired(e => e.AspNetUser)
-                .HasForeignKey(e => e.UserId)
-                .WillCascadeOnDelete(false);
+                .HasForeignKey(e => e.UserId);
 
             modelBuilder.Entity<AspNetUser>()
                 .HasMany(e => e.Subscribes)
                 .WithRequired(e => e.AspNetUser)
-                .HasForeignKey(e => e.UserId)
-                .WillCascadeOnDelete(false);
+                .HasForeignKey(e => e.UserId);
 
             modelBuilder.Entity<Loaner>()
                 .Property(e => e.CompanyName)
@@ -71,19 +69,9 @@ namespace LoanComparer.Data.Entities
                 .Property(e => e.Terms)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Loaner>()
-                .HasMany(e => e.Visits)
-                .WithRequired(e => e.Loaner)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<LoanerWebsite>()
                 .Property(e => e.siteName)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<LoanerWebsite>()
-                .HasMany(e => e.Loaners)
-                .WithRequired(e => e.LoanerWebsite)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<LoanRequest>()
                 .Property(e => e.Amount)

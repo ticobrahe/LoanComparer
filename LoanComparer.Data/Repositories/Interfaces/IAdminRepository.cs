@@ -12,5 +12,6 @@ namespace LoanComparer.Data.Repositories.Interfaces
     {
         Task<IEnumerable<AdminHomeModel>> LoanProviderVisitDetails();
         Task<IEnumerable<LoanRequest>> GetAllLoanRequest();
+        
     }
 }

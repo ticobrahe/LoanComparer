@@ -1,5 +1,5 @@
 * {
-    position: relative;
+	position: relative;
 }
 body{
 	padding:0;
@@ -15,12 +15,34 @@ body a{
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
 }
-.wrapper {
-    min-height: 80vh;
+.role-create {
+	background: #f78e7e;
+	color: #FFFFFF;
+	text-align: center;
+	padding: 14px 0;
+	border: none;
+	border-bottom: 5px solid #f78e7e;
+	font-size: 17px;
+	outline: none;
+	width: 100%;
+	cursor: pointer;
+	margin-bottom: 0px;
+	margin-top: 20px;
 }
-
+.wrapper {
+	min-height: 80vh;
+}
+.delete {
+	color: red;
+}
 .mt-72 {
 	margin-top: 72px;
+}
+.pb-60 {
+	padding-bottom: 60px;
+}
+.pb-20 {
+	padding-bottom: 20px;
 }
 .green {
 	color: #0aab8a !important;
@@ -35,7 +57,7 @@ body a{
 }
 footer {
 	position: absolute;
-    left: 0;
+	left: 0;
 	bottom: -10vh;
 	width: 100%;
 	text-align: center;
@@ -659,6 +681,16 @@ button.close {
 	color: #000;
 	margin: 25px 0;
 }
+.select {
+	width: 100%;
+	padding: 10px;
+	font-size: 14px;
+	border: none;
+	border-bottom: 2px solid #e6e6e6;
+	outline: none;
+	color: #000000;
+	margin-bottom: 20px;
+}
 .main form input[type="number"],.main form input[type="email"],.main form input[type="password"], select {
 	width: 100%;
 	padding: 10px;
@@ -684,7 +716,23 @@ button.close {
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
 }
-
+.btn-submit {
+	color: #FFFFFF;
+	text-align: center;
+	padding: 8px 0;
+	border: none;
+	font-size: 17px;
+	outline: none;
+	width: 20%;
+	cursor: pointer;
+	margin-bottom: 0px;
+	margin-top: 10px;
+}
+	.btn-submit:hover {
+		background: #0aab8a;
+		border-bottom: 5px solid #0aab8a;
+		transition: 0.5s all;
+	}
 .main form input[type="submit"] {
 		background:#f78e7e;
 	color: #FFFFFF;

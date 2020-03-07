@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using LoanComparer.Data.Entities;
 using LoanComparer.Data.Models;
-using LoanComparer.Data.Models.ViewModels;
 
 namespace LoanComparer.Data.Repositories.Interfaces
 {
     public interface ILoanRepository
     {
-        Task<IEnumerable<LoanerViewModel>> FindLoaner(LoanRequestInfo model);
-        Task<LoanerDetailViewModel> GetLoanDetail(int id);
+        Task<IEnumerable<LoanerDto>> FindLoaner(LoanRequestInfo model);
+        Task<LoanerDetailDto> GetLoanDetail(int id);
         decimal TotalAmountToPay(decimal rate, decimal amount, int duration);
         IEnumerable<RepaymentDetails> LoanRepayment(decimal totalAmount,int duration);
         Task<bool> Save();

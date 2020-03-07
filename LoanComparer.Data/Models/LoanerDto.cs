@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoanComparer.Data.Models.ViewModels
+namespace LoanComparer.Data.Models
 {
-    public class LoanerViewModel
+    public class LoanerDto
     {
         public int Id { get; set; }
         public string CompanyName { get; set; }

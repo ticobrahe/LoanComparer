@@ -38,5 +38,7 @@ namespace LoanComparer.Data.Repositories
         {
             return await _context.LoanRequests.ToListAsync();
         }
+
+        
     }
 }

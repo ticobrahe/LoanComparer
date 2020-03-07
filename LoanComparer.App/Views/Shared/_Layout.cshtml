@@ -23,11 +23,25 @@
                     @Html.ActionLink("EasyLoan", "Index", "Home", new { area = "" }, new { @class = "navbar-brand green" })
                 </div>
                 <div class="navbar-collapse collapse">
+                    @if (User.IsInRole("admin"))
+                    {
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Home", "Index", "Admin")</li>
+                        <li>@Html.ActionLink("All roles", "Index", "Role")</li>
+                        <li>@Html.ActionLink("Create User Role", "CreateUserRole", "Role")</li>
+                        <li>@Html.ActionLink("Get User Role", "GetUserRole", "Role")</li>
+                        <li>@Html.ActionLink("Delete User Role", "DeleteUserRole", "Role")</li>
                     </ul>
+                    }
+                    else
+                    {
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Index", "Home")</li>
+                </ul>
+                    }
+                    
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>

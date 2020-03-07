@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using LoanComparer.Data.Entities;
 using LoanComparer.Data.Models;
-using LoanComparer.Data.Models.ViewModels;
 using LoanComparer.Data.Repositories.Interfaces;
 
 namespace LoanComparer.Data.Repositories
@@ -19,24 +18,24 @@ namespace LoanComparer.Data.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<LoanerViewModel> >FindLoaner(LoanRequestInfo model)
+        public async Task<IEnumerable<LoanerDto> >FindLoaner(LoanRequestInfo model)
         {
             var query = from loan in _context.Loaners
                 where loan.MinimumAmount <= model.Amount &&
                       loan.Duration >= (int)model.Duration &&
                       loan.LoanType == model.LoanType
-                select new LoanerViewModel
+                select new LoanerDto
                     { CompanyName = loan.CompanyName, Id = loan.LoanerId, LoanType = loan.LoanType };
             return await query.ToListAsync();
         }
 
-        public async Task<LoanerDetailViewModel> GetLoanDetail(int id)
+        public async Task<LoanerDetailDto> GetLoanDetail(int id)
         {
             var query = from loan in _context.Loaners
                 join siteName in _context.LoanerWebsites
                     on loan.SiteId equals siteName.SiteId
                 where loan.LoanerId == id
-                select new LoanerDetailViewModel
+                select new LoanerDetailDto
                 {
                     CompanyName = loan.CompanyName,
                     LoanType = loan.LoanType,
