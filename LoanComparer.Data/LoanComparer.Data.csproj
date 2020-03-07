@@ -69,8 +69,8 @@
     <Compile Include="Models\AdminHomeModel.cs" />
     <Compile Include="Models\LoanRequestInfo.cs" />
     <Compile Include="Models\RepaymentDetails.cs" />
-    <Compile Include="Models\ViewModels\LoanerDetailViewModel.cs" />
-    <Compile Include="Models\ViewModels\LoanerViewModel.cs" />
+    <Compile Include="Models\LoanerDetailDto.cs" />
+    <Compile Include="Models\LoanerDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AdminRepository.cs" />
     <Compile Include="Repositories\Interfaces\IAdminRepository.cs" />
