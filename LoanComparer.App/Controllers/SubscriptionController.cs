@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using LoanComparer.Data.Models;
 using LoanComparer.Data.Repositories.Interfaces;
 using Microsoft.AspNet.Identity;
 using Paystack.Net.SDK.Transactions;
@@ -25,17 +26,24 @@ namespace LoanComparer.App.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var plan = new SubscriptionPlan
+            {
+                Basic = 1000,
+                Premium = 2500,
+                Ultimate = 4300
+            };
+            return View(plan);
         }
 
         [Authorize]
         [HttpPost]
-        public  async Task<ActionResult> Subscribe()
+        public  async Task<ActionResult> Subscribe(int amount)
         {
             string secretKey = ConfigurationManager.AppSettings["PayStackSec"];
             var paystackTransactionAPI = new PaystackTransaction(secretKey);
             string email = User.Identity.GetUserName();
-            var response = await paystackTransactionAPI.InitializeTransaction(email, 100000, callbackUrl: "https://localhost:44329/Subscription/VerifyPayment");
+            TempData["amount"] = amount;
+            var response = await paystackTransactionAPI.InitializeTransaction(email, amount*100, callbackUrl: "https://localhost:44329/Subscription/VerifyPayment");
             if (response.status)
             {
                 TempData["paymentRef"] = response.data.reference;
@@ -57,7 +65,8 @@ namespace LoanComparer.App.Controllers
             if (response.status && (response.data.status == "success"))
             {
                 string userId = User.Identity.GetUserId();
-                _loanRepository.CreateSubscription(userId);
+                int amount = Convert.ToInt32(TempData["amount"]);
+                _loanRepository.CreateSubscription(userId, amount);
                 await _loanRepository.Save();
                 int providerId = (int)Session["providerId"];
                 TempData["Message"] = "Payment was successful";

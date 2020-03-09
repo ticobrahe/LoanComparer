@@ -58,6 +58,16 @@ namespace LoanComparer.App.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
+            var userId = User.Identity.GetUserId();
+            var isSubscribe = await _loanRepository.IsSubscribe(userId);
+            if (!isSubscribe)
+            {
+                
+                TempData["active"] = false;
+                Session["providerId"] = id;
+                return RedirectToAction("Index", "Subscription");
+            }
+
             decimal amount = Convert.ToDecimal(Session["amount"]);
             int duration = Convert.ToInt16(Session["duration"]);
             var loanerDetail = await _loanRepository.GetLoanDetail(id);
@@ -74,14 +84,7 @@ namespace LoanComparer.App.Controllers
         {
             var loaner = await _loanRepository.GetLoanDetail(id);
             var userId = User.Identity.GetUserId();
-            var isSubscribe = await _loanRepository.IsSubscribe(userId);
-            if (!isSubscribe)
-            {
-                TempData["active"] = false;
-                Session["providerId"] = id;
-                return RedirectToAction("Index", "Subscription");
-            } 
-            _loanRepository.LoanProviderCount(userId, loaner.Id);
+            _loanRepository.LoanProviderCount(userId, id);
            await _loanRepository.Save();
             return Redirect(loaner.SiteName);
         }
