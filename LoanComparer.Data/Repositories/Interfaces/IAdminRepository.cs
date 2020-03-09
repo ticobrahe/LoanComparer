@@ -10,6 +10,8 @@ namespace LoanComparer.Data.Repositories.Interfaces
 {
     public interface IAdminRepository
     {
+        void AddProvider(LoanerWebsite provider);
+        Task<bool> Save();
         Task<IEnumerable<AdminHomeModel>> LoanProviderVisitDetails();
         Task<IEnumerable<LoanRequest>> GetAllLoanRequest();
         

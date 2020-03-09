@@ -18,6 +18,14 @@ namespace LoanComparer.Data.Repositories
         {
             _context = context;
         }
+
+        public void AddProvider(LoanerWebsite provider)
+        {
+            _context.LoanerWebsites.Add(provider);
+        }
+
+        
+
         public async Task<IEnumerable<AdminHomeModel>> LoanProviderVisitDetails()
         {
             var query = from loan in _context.Loaners
@@ -38,7 +46,10 @@ namespace LoanComparer.Data.Repositories
         {
             return await _context.LoanRequests.ToListAsync();
         }
+        public async Task<bool> Save()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
 
-        
     }
 }

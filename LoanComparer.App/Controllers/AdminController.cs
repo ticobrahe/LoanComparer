@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using LoanComparer.App.Models;
 using LoanComparer.Data;
+using LoanComparer.Data.Entities;
 using LoanComparer.Data.Repositories.Interfaces;
 
 namespace LoanComparer.App.Controllers
@@ -27,7 +29,28 @@ namespace LoanComparer.App.Controllers
             return View(visit);
         }
 
-       
+        public ActionResult ProviderLink()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ProviderLink(ProviderLink model)
+        {
+            if (ModelState.IsValid)
+            {
+                var loanProvider = new LoanerWebsite
+                {
+                    siteName = model.SiteName
+                };
+                _adminRepository.AddProvider(loanProvider);
+               await _adminRepository.Save();
+               ViewBag.Message = "Proider link created succesfully";
+               return View();
+            }
+
+            return View();
+        }
 
     }
 }
