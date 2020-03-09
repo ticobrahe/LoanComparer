@@ -6,7 +6,7 @@ using System.Web;
 
 namespace LoanComparer.App.Models
 {
-    public class ProviderLink
+    public class ProviderLinkViewModel
     {
         [Required]
         public string SiteName { get; set; }

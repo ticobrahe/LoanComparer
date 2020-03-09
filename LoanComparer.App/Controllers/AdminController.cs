@@ -35,7 +35,7 @@ namespace LoanComparer.App.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ProviderLink(ProviderLink model)
+        public async Task<ActionResult> ProviderLink(ProviderLinkViewModel model)
         {
             if (ModelState.IsValid)
             {
