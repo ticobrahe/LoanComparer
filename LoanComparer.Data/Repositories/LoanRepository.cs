@@ -128,13 +128,13 @@ namespace LoanComparer.Data.Repositories
             }
         }
 
-        public void CreateSubscription(string userId)
+        public void CreateSubscription(string userId, int amount)
         {
             var subscription = new Subscribe()
             {
                 UserId = userId,
                 Active = true,
-                Amount = 1000,
+                Amount = amount,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(30)
             };
