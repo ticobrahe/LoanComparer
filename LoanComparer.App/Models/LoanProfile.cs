@@ -14,6 +14,7 @@ namespace LoanComparer.App.Models
         {
             CreateMap<HomeViewModel, LoanRequestInfo>().ReverseMap();
             CreateMap<HomeViewModel, LoanRequest>();
+            CreateMap<CreateProviderViewModel, Loaner>();
         }
     }
 }

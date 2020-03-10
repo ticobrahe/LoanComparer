@@ -10,73 +10,69 @@
     {
         <div class="text-center"><p class="alert alert-danger">@ViewBag.Error</p></div>
     }
-    <div class="text-center">
-        @using (Html.BeginForm("Subscribe", "Subscription", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-success">Subscribe</button>
-        }
-    </div>
+    
 </div>
 <div class=" container mx-auto">
-        <div class="pricing-wrapper clearfix ">
-            <h1 class="pricing-table-title " style="text-transform: uppercase; text-align: center;color: red "> Subscription </h1>
-            @using (Html.BeginForm("Subscribe", "Subscription"))
-            {
-                <div class="pricing-table">
-                    <h3 class="pricing-title">Basic</h3>
-                    <div class="price">&#8358; @Model.Basic</div>
-                    <ul class="table-list">
-                        <li>Access more Loan <span> providers</span></li>
-                        <li>receive update <span>Latest Loan providers</span></li>
-                        <li>Unlimited Access <span class="unlimited">Huge Loan provider with little interest</span></li>
-                        <li>One <span class="unlimited">Months</span></li>
-                        <input type="hidden" name=" sub" value="5000" />
-                    </ul>
-                    <input type="hidden" value="Basic" name="amount"/>
-                    <input type="hidden" value="@Model.Basic" name="amount"/>
-                    <div class="table-buy">
-                        <button type="submit" class="pricing-action">Subscribe</button>
-                    </div>
+    <div class="pricing-wrapper clearfix ">
+        <h1 class="pricing-table-title " style="text-transform: uppercase; text-align: center; color: red; margin-bottom: 20px;"> Subscription Plans </h1>
+        @using (Html.BeginForm("Subscribe", "Subscription"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="pricing-table">
+                <h3 class="pricing-title">Basic</h3>
+                <div class="price">&#8358; @Model.Basic</div>
+                <ul class="table-list">
+                    <li>Access more Loan <span> providers</span></li>
+                    <li>receive update <span>Latest Loan providers</span></li>
+                    <li>Unlimited Access <span class="unlimited">Huge Loan provider with little interest</span></li>
+                    <li>One <span class="unlimited">Months</span></li>
+                    <input type="hidden" name=" sub" value="5000" />
+                </ul>
+                <input type="hidden" value="Basic" name="amount" />
+                <input type="hidden" value="@Model.Basic" name="amount" />
+                <div class="table-buy">
+                    <button type="submit" class="pricing-action">Subscribe</button>
                 </div>
-            }
-            @using (Html.BeginForm("Subscribe", "Subscription"))
-            {
-        <div class="pricing-table recommended">
-            <h3 class="pricing-title">Premium</h3>
-            <div class="price">&#8358;@Model.Premium</div>
-            <input type="hidden" value="Premium" name="package" />
-            <input type="hidden" value="@Model.Premium" name="amount" />
-            <ul class="table-list">
-                <li>Access more Loan <span> providers</span></li>
-                <li>receive update <span>Latest Loan providers</span></li>
-                <li>Unlimited Access <span class="unlimited">Huge Loan provider with little interest</span></li>
-                <li>Three <span class="unlimited">Months</span></li>
-            </ul>
-            <div class="table-buy">
-                <button type="submit" class="pricing-action">Subscribe</button>
-
             </div>
-        </div>
-            }
-            @using (Html.BeginForm("Subscribe", "Subscription"))
-            {
-        <div class="pricing-table ultimate">
-            <h3 class="pricing-title">Ultimate</h3>
-            <div class="price">&#8358;@Model.Ultimate</div>
-            <input type="hidden" value="Ultimate" name="package" />
-            <input type="hidden" value="@Model.Ultimate" name="amount" />
-            <ul class="table-list">
-                <li>Access more Loan <span> providers</span></li>
-                <li>receive update <span>Latest Loan providers</span></li>
-                <li>Unlimited Access <span class="unlimited">Huge Loan provider with little interest</span></li>
-                <li>Six <span class="unlimited">Months</span></li>
-            </ul>
-            <div class="table-buy">
-                <button type="submit" class="pricing-action">Subscribe</button>
+        }
+        @using (Html.BeginForm("Subscribe", "Subscription"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="pricing-table recommended">
+                <h3 class="pricing-title">Premium</h3>
+                <div class="price">&#8358;@Model.Premium</div>
+                <input type="hidden" value="Premium" name="package" />
+                <input type="hidden" value="@Model.Premium" name="amount" />
+                <ul class="table-list">
+                    <li>Access more Loan <span> providers</span></li>
+                    <li>receive update <span>Latest Loan providers</span></li>
+                    <li>Unlimited Access <span class="unlimited">Huge Loan provider with little interest</span></li>
+                    <li>Three <span class="unlimited">Months</span></li>
+                </ul>
+                <div class="table-buy">
+                    <button type="submit" class="pricing-action">Subscribe</button>
 
+                </div>
             </div>
-        </div>
-            }
-        </div>
+        }
+        @using (Html.BeginForm("Subscribe", "Subscription"))
+        {
+            <div class="pricing-table ultimate">
+                <h3 class="pricing-title">Ultimate</h3>
+                <div class="price">&#8358;@Model.Ultimate</div>
+                <input type="hidden" value="Ultimate" name="package" />
+                <input type="hidden" value="@Model.Ultimate" name="amount" />
+                <ul class="table-list">
+                    <li>Access more Loan <span> providers</span></li>
+                    <li>receive update <span>Latest Loan providers</span></li>
+                    <li>Unlimited Access <span class="unlimited">Huge Loan provider with little interest</span></li>
+                    <li>Six <span class="unlimited">Months</span></li>
+                </ul>
+                <div class="table-buy">
+                    <button type="submit" class="pricing-action">Subscribe</button>
+
+                </div>
+            </div>
+        }
+    </div>
     </div>
