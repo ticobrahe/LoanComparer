@@ -24,7 +24,12 @@ namespace LoanComparer.Data.Repositories
             _context.LoanerWebsites.Add(provider);
         }
 
-        
+        public void AddLoanProvider(Loaner provider)
+        {
+            provider.CreatedAt = DateTime.Now;
+            _context.Loaners.Add(provider);
+        }
+
 
         public async Task<IEnumerable<AdminHomeModel>> LoanProviderVisitDetails()
         {
@@ -49,6 +54,11 @@ namespace LoanComparer.Data.Repositories
         public async Task<bool> Save()
         {
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<IEnumerable<LoanerWebsite>> ProviderSiteName()
+        {
+            return await _context.LoanerWebsites.ToListAsync();
         }
 
     }
